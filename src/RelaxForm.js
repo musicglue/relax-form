@@ -94,7 +94,7 @@ export default (Component, options = {}) => {
           return Promise.resolve(this.option('onSubmit')(form))
             .then(submitResult => {
               dispatch(actions.submitFinished(this.formPath));
-              this.option('onComplete')(submitResult);
+              this.option('onComplete')(submitResult, form);
             })
             .catch(err => {
               dispatch(actions.submitFinished(this.formPath));
