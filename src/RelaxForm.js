@@ -12,6 +12,7 @@ import provideState, {
 } from 'react-relax';
 
 import getDisplayName from './utils/getDisplayName';
+import isEvent from './utils/isEvent';
 import * as actions from './actions';
 
 const defaultOptions = {
@@ -83,7 +84,7 @@ export default (Component, options = {}) => {
     }
 
     handleSubmit = (e) => {
-      e.preventDefault();
+      if (isEvent(e)) e.preventDefault();
       const form = selectFromStore({ form: this.formPath }).get('form');
       dispatch(actions.submitStart(this.formPath));
       return this.validate()
@@ -93,7 +94,7 @@ export default (Component, options = {}) => {
             return null;
           }
 
-          return Promise.resolve(this.option('onSubmit')(form))
+          return Promise.resolve(this.option('onSubmit')(form, this.props))
             .then(submitResult => {
               dispatch(actions.submitFinished(this.formPath));
               this.option('onComplete')(submitResult, form);
