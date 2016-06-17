@@ -1,5 +1,4 @@
 import Immutable from 'immutable';
-import omit from 'lodash.omit';
 import { joinSelectors } from 'react-relax';
 import * as types from './actionTypes';
 
@@ -15,7 +14,14 @@ const updateField = (form, name, state, updater) =>
 
 const reducers = {
   [types.setup]: (state, action) =>
-    state.setIn(action.form, Immutable.fromJS(omit(action, ['type']))),
+    state.updateIn(action.form, Immutable.Map(), form =>
+      form
+        .set('allErrors', Immutable.List())
+        .set('errors', Immutable.List())
+        .set('form', action.form)
+        .set('submitting', false)
+        .set('valid', false)
+        .set('validationsPending', true)),
 
   [types.teardown]: (state, { form }) =>
     state.deleteIn(form),
@@ -73,6 +79,7 @@ const reducers = {
       .updateIn(form, Immutable.Map(), formState =>
         formState
           .set('validationsPending', false)
+          .set('valid', errors.length === 0)
           .set('errors', groupedErrors.get('ELEPHORM:NO_FIELD', Immutable.List()))
           .set('allErrors', iErrors));
   },

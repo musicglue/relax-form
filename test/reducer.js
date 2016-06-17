@@ -16,6 +16,9 @@ describe('Elephorm', () => {
     const expectField = (state, field, value) =>
       expect(state.getIn(joinSelectors(form, 'fields', field))).to.equal(value);
 
+    const expectForm = (state, path, value) =>
+      expect(state.getIn(joinSelectors(form, path))).to.equal(value);
+
     it('returns a blank map as default state', () =>
       expect(reducer(undefined, undefined)).to.equal(Immutable.Map()));
 
@@ -31,6 +34,21 @@ describe('Elephorm', () => {
 
       it('saves the form path', () =>
         expect(state.getIn(joinSelectors(form, 'form'))).to.equal(form));
+
+      it('sets allErrors to an empty list', () =>
+        expectForm(state, 'allErrors', Immutable.List()));
+
+      it('sets errors to an empty list', () =>
+        expectForm(state, 'errors', Immutable.List()));
+
+      it('sets submitting to false', () =>
+        expectForm(state, 'submitting', false));
+
+      it('sets valid to false', () =>
+        expectForm(state, 'valid', false));
+
+      it('sets validationsPending to true', () =>
+        expectForm(state, 'validationsPending', true));
     });
 
     describe(actionTypes.teardown, () => {

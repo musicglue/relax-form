@@ -25,7 +25,8 @@ export default (Component, options = {}) => {
   const Wrapped = provideState(Component, {
     within: ({ form }) => form,
     bindings: {
-      active: 'active',
+      valid: 'valid',
+      submitting: 'submitting',
     },
   });
 
@@ -81,7 +82,8 @@ export default (Component, options = {}) => {
       setTimeout(this.handleChange);
     }
 
-    handleSubmit = () => {
+    handleSubmit = (e) => {
+      e.preventDefault();
       const form = selectFromStore({ form: this.formPath }).get('form');
       dispatch(actions.submitStart(this.formPath));
       return this.validate()
