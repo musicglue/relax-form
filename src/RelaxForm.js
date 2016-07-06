@@ -61,7 +61,7 @@ export default (Component, options = {}) => {
 
     componentWillUnmount() {
       if (this.option('clearOnUnmount')) {
-        dispatch(actions.setup(this.formPath));
+        dispatch(actions.teardown(this.formPath));
       }
     }
 
