@@ -1,6 +1,6 @@
 {
   "name": "relax-form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple form library for react-relax",
   "main": "lib/index.js",
   "scripts": {
