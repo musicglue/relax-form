@@ -63,6 +63,10 @@ export default (Component, options = {}) => {
       if (this.option('clearOnUnmount')) {
         dispatch(actions.teardown(this.formPath));
       }
+
+      if (this.unsubscribe) {
+        this.unsubscribe();
+      }
     }
 
     option(name, props = this.props) {
