@@ -67,6 +67,10 @@ export default (Component, options = {}) => {
       if (this.unsubscribe) {
         this.unsubscribe();
       }
+
+      if (this.formChangeHandlerDelay) {
+        clearTimeout(this.formChangeHandlerDelay);
+      }
     }
 
     option(name, props = this.props) {
@@ -84,7 +88,12 @@ export default (Component, options = {}) => {
 
     handleFormChange = (change) => {
       this.formState = change.get('form');
-      setTimeout(this.handleChange);
+
+      if (this.formChangeHandlerDelay) {
+        clearTimeout(this.formChangeHandlerDelay);
+      }
+
+      this.formChangeHandlerDelay = setTimeout(this.handleChange);
     }
 
     handleSubmit = (e) => {
