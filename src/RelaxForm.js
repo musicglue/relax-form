@@ -124,7 +124,7 @@ export default (Component, options = {}) => {
       const form = selectFromStore({ form: this.formPath }).get('form');
       dispatch(actions.validationsStart(this.formPath));
       return Promise.resolve()
-        .then(() => Promise.all(flattenDeep(validations(form))))
+        .then(() => Promise.all(flattenDeep(validations(form, this.props))))
         .then(errors => {
           dispatch(actions.validationsFinished(this.formPath, errors.filter(err => !!err)));
           return !!errors.length;

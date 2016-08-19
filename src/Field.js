@@ -47,7 +47,7 @@ class RelaxField extends React.Component {
   render() {
     const { component, children, ...props } = this.props;
     return React.createElement(component, {
-      ...omit(props, ['form', 'name']),
+      ...omit(props, ['form', 'name', 'validateOn']),
       valid: props.errors.length === 0,
       onBlur: this.handleBlur,
       onChange: this.handleChange,
